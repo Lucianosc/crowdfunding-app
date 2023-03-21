@@ -3,13 +3,15 @@ import { Link, useNavigate } from 'react-router-dom'
 import { CustomButton } from './'
 import { logo, menu, search, thirdweb } from '../assets'
 import { navlinks } from '../constants'
+import { useStateContext } from '../context'
 
 export default function Navbar() {
   const navigate = useNavigate()
   const [isActive, setIsActive] = useState('dashboard')
   const [toggleDrawer, setToggleDrawer] = useState(false)
   const drawerRef = useRef(null)
-  const address = '0x1111'
+
+  const { address, connect } = useStateContext()
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutsideDrawer, true)
@@ -49,7 +51,7 @@ export default function Navbar() {
           styles={address ? 'bg-[#1dc071]' : 'bg-[#8c6dfd]'}
           handleClick={() => {
             if (address) navigate('create-campaign')
-            else 'connect()'
+            else connect()
           }}
         />
         <Link to="/profile">
@@ -66,8 +68,8 @@ export default function Navbar() {
       <div className="flex justify-between items-center relative sm:hidden ">
         <div className="flex justify-center items-center w-[40px] h-[40px] rounded-[10px] bg-[#2c2f32] cursor-pointer">
           <img
-            src={thirdweb}
-            alt="user"
+            src={logo}
+            alt="logo"
             className="w-[60%] h-[60%] object-contain"
           />
         </div>
@@ -121,8 +123,9 @@ export default function Navbar() {
               title={address ? 'Create campaign' : 'Connect'}
               styles={address ? 'bg-[#1dc071]' : 'bg-[#8c6dfd]'}
               handleClick={() => {
+                setToggleDrawer(false)
                 if (address) navigate('create-campaign')
-                else 'connect()'
+                else connect()
               }}
             />
           </div>

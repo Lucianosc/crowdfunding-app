@@ -1,26 +1,26 @@
-import React, { useContext, createContext } from "react";
+import React, { useContext, createContext } from 'react'
 import {
   useAddress,
   useContract,
   useMetamask,
   useContractWrite,
-} from "@thirdweb-dev/react";
-import { ethers } from "ethers";
+} from '@thirdweb-dev/react'
+import { ethers } from 'ethers'
 
-const StateContext = createContext();
+const StateContext = createContext()
 
 export const StateContextProvider = ({ children }) => {
   // hook used to get the contract instance at the specified address.
-  const { contract } = useContract(import.meta.env.VITE_CONTRACT_ADDRESS);
+  const { contract } = useContract(import.meta.env.VITE_CONTRACT_ADDRESS)
 
   //hook used to create a write method for the contract method createCampaign
   const { mutateAsync: createCampaign } = useContractWrite(
     contract,
-    "createCampaign"
-  );
+    'createCampaign',
+  )
 
-  const address = useAddress(); //  hook used to get the current user's Ethereum address.
-  const connect = useMetamask(); // hook used to connect the user's browser wallet (Metamask) to the dApp.
+  const address = useAddress() //  hook used to get the current user's Ethereum address.
+  const connect = useMetamask() // hook used to connect the user's browser wallet (Metamask) to the dApp.
 
   const publishCampaign = async (form) => {
     try {
@@ -29,23 +29,23 @@ export const StateContextProvider = ({ children }) => {
         address, //owner's address
         form.title,
         form.description,
-        form.target,
+        ethers.utils.parseUnits(form.target, 'ether'),
         new Date(form.deadline).getTime(),
         form.image,
-      ]);
-      console.log("contract call success", data);
+      ])
+      console.log('contract call success', data)
     } catch (e) {
-      console.log("contract call failure", e);
+      console.log('contract call failure', e)
     }
-  };
+  }
 
   return (
     <StateContext.Provider
-      value={{ address, contract, createCampaign: publishCampaign }}
+      value={{ address, contract, connect, createCampaign: publishCampaign }}
     >
       {children}
     </StateContext.Provider>
-  );
-};
+  )
+}
 
-export const useStateContext = () => useContext(StateContext);
+export const useStateContext = () => useContext(StateContext)
