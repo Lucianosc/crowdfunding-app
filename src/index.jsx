@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ThirdwebProvider, ChainId } from '@thirdweb-dev/react'
 import App from './App'
-import './index.css'
+import './main.css'
 import { StateContextProvider } from './context'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))

@@ -23,7 +23,7 @@ export default function FormField({
           onChange={handleChange}
           rows="10"
           className="py-[15px] sm:px-[25px] sm:min-w-[300px] px-[15px] outline-none border-[1px]
-         border-[#3a3a43] bg-transparent font-epilogue text-white text-[14px] placegolder:text-[#4b5264] 
+         border-[#3a3a43] bg-transparent font-epilogue text-[14px] placeholder:text-[#4b5264] 
          rounded-[10px]"
         ></textarea>
       ) : (
@@ -35,7 +35,7 @@ export default function FormField({
           onChange={handleChange}
           step="0.1"
           className="py-[15px] sm:px-[25px] sm:min-w-[300px] px-[15px] outline-none border-[1px]
-           border-[#3a3a43] bg-transparent font-epilogue text-white text-[14px] placegolder:text-[#4b5264] 
+           border-[#3a3a43] bg-transparent font-epilogue text-[14px] placeholder:text-[#4b5264] 
            rounded-[10px]"
         ></input>
       )}
