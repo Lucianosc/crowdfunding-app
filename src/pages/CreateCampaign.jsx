@@ -81,7 +81,7 @@ export default function CreateCampaign() {
             alt="money"
             className="w-[40px] h-[40px] object-contain"
           />
-          <h4 className="font-epilogue font-bold  ml-[20px]">
+          <h4 className="font-epilogue font-bold text-[24px] ml-[20px]">
             You will get 100% of raised amount
           </h4>
         </div>

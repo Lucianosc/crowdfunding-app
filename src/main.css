@@ -7,26 +7,41 @@
 
 @layer base {
 
-  /* :root {
-    --color-primary: theme('colors.primary');
-    --color-secondary: theme('colors.secondary');
-    --color-tertiary: theme('colors.tertiary');
-  } */
+  :root {
+    --color-primary: theme('colorPalette.primary');
+    --color-secondary: theme('colorPalette.secondary');
+    --color-tertiary: theme('colorPalette.tertiary');
+    --color-black: theme('colorPalette.black');
+    --color-black2: theme('colorPalette.black2');
+    --color-grey: theme('colorPalette.grey');
+    --color-grey2: theme('colorPalette.grey2');
+    --color-grey3: theme('colorPalette.grey3');
+    --color-grey4: theme('colorPalette.grey4');
+    --color-grey5: theme('colorPalette.grey5');
+  }
 
   h1 {
     @apply text-[18px] text-white
   }
 
+  h2 {
+    @apply text-white
+  }
+
+  h3 {
+    @apply text-white font-semibold text-[16px] leading-[26px]
+  }
+
   h4 {
 
-    @apply text-[25px] text-white
+    @apply text-[14px] text-white leading-[22px]
   }
 
   p {
-    @apply text-white;
+    @apply text-white text-[12px] leading-[18px];
   }
 
-  input {
+  input, textarea {
     @apply text-white;
   }
 
