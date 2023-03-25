@@ -22,7 +22,7 @@ export const StateContextProvider = ({ children }) => {
   const address = useAddress() //  hook used to get the current user's Ethereum address.
   const connect = useMetamask() // hook used to connect the user's browser wallet (Metamask) to the dApp.
 
-  const getCampaigns = async () => {
+  const getCampaigns = async (filtered = false) => {
     const campaigns = await contract.call('getCampaigns')
     const parsedCampaigns = campaigns.map((campaign, i) => ({
       owner: campaign.owner,
@@ -36,10 +36,15 @@ export const StateContextProvider = ({ children }) => {
       image: campaign.image,
       id: i,
     }))
+    //filter by address
+    if (filtered) {
+      return parsedCampaigns.filter((campaign) => campaign.owner === address)
+    }
     return parsedCampaigns
   }
 
   const publishCampaign = async (form) => {
+    console.log(form)
     try {
       // to write a method for the contract we need to pass all the parameters of the method in order
       const data = await createCampaign([
