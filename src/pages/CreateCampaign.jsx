@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { ethers } from 'ethers'
 import { useStateContext } from '../context'
 import { money } from '../assets'
-import { CustomButton, FormField } from '../components'
+import { CustomButton, FormField, Loader } from '../components'
 import { checkIfImage } from '../utils'
 
 export default function CreateCampaign() {
@@ -42,7 +42,7 @@ export default function CreateCampaign() {
 
   return (
     <div className="flex flex-col rounded-[10px] sm:p-10 p-4 justify-center items-center bg-[#1c1c24]">
-      {isLoading && 'Loading...'}
+      {isLoading && <Loader />}
       <div className="flex justify-center items-center p-[16px] sm:min-w-[380px] bg-[#3a3a43] rounded-[10px]">
         <h1 className="font-epilogue font-bold sm:text-[25px] leading-[38px]">
           Start a Campaign
