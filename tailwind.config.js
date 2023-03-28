@@ -10,7 +10,7 @@ module.exports = {
     },
     colorPalette: {
       primary: "#4acd8d",
-      secondary: "#00FF00",
+      secondary: "#8c6dfd",
       tertiary: "#0000FF",
       black: "#13131a",
       black2: "#1c1c24",

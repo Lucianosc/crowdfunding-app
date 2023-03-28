@@ -14,9 +14,9 @@ export default function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Profile" element={<Profile />} /> 
+          <Route path="/Profile" element={<Profile />} />
           <Route path="/Create-campaign" element={<CreateCampaign />} />
-          {/* <Route path="/CampaignDetails" element={<CampaignDetails />} />  */}
+          <Route path="/Campaign-details/:id" element={<CampaignDetails />} />
         </Routes>
       </div>
     </div>
