@@ -33,7 +33,7 @@ export default function Navbar() {
         <input
           type="text"
           placeholder="Search for campaigns"
-          className="flex w-full foont-epilogue text-[14px] placeholder:text-[#4b5264] text-white bg-transparent outline-none pr-2"
+          className="flex w-full foont-roboto text-[14px] placeholder:text-[#4b5264] text-white bg-transparent outline-none pr-2"
         />
         <div className="flex justify-center items-center cursor-pointer w-[72px] h-full rounded-[20px] bg-[#4acd8d]">
           <img
@@ -108,7 +108,7 @@ export default function Navbar() {
                   }`}
                 />
                 <p
-                  className={`ml-[20px] font-epilogue font-semibold text-[14px] ${
+                  className={`ml-[20px]  font-semibold text-[14px] ${
                     isActive === link.name ? 'text-[#1dc071]' : 'text-[#808191]'
                   }`}
                 >

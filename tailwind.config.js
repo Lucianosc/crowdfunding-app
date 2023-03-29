@@ -3,7 +3,7 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     fontFamily: {
-      epilogue: "epilogue",
+      roboto: ["Roboto", "sans-serif"],
     },
     textColor: {
       white: "#FFFFFF",

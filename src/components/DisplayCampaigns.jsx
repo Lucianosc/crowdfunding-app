@@ -29,7 +29,7 @@ export default function DisplayCampaigns({ title, isFilteredByOwner = false }) {
 
   return (
     <div>
-      <h1 className="font-epilogue font-semibold text-left">
+      <h1 className=" font-semibold text-left">
         {title} ({campaigns.length})
       </h1>
       <div className="flex flex-wrap mt-[20px] gap-[26px]">
@@ -49,7 +49,7 @@ export default function DisplayCampaigns({ title, isFilteredByOwner = false }) {
           ))
         ) : (
           campaigns.length === 0 && (
-            <p className="font-epilogue font-semibold text-[14px] leading-[30px] text-[#818183]">
+            <p className=" font-semibold text-[14px] leading-[30px] text-[#818183]">
               There are no campaigns yet
             </p>
           )

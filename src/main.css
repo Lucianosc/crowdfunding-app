@@ -21,30 +21,33 @@
   }
 
   h1 {
-    @apply text-[18px] text-white
+    @apply text-[18px] text-white font-roboto
   }
 
   h2 {
-    @apply text-white
+    @apply text-white font-roboto
   }
 
   h3 {
-    @apply text-white font-semibold text-[16px] leading-[26px]
+    @apply text-white font-semibold text-[16px] leading-[26px] font-roboto
   }
 
   h4 {
 
-    @apply text-[14px] text-white leading-[22px]
+    @apply text-[14px] text-white leading-[22px] font-roboto
   }
 
   p {
-    @apply text-white text-[12px] leading-[18px];
+    @apply text-white text-[12px] leading-[18px] font-roboto
   }
 
   input, textarea {
-    @apply text-white;
+    @apply text-white font-roboto
   }
 
+  button {
+    @apply font-roboto
+  }
 
 }
 
