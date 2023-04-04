@@ -11,7 +11,7 @@ export default function App() {
     <div
       className={`flex flex-row p-4 min-h-screen ${
         isDarkTheme ? 'dark' : 'light'
-      } bg-[var(--color-primary)]`}
+      } bg-[var(--color-black)]`}
     >
       <div className="sm:flex hidden mr-10 relative">
         <Sidebar />

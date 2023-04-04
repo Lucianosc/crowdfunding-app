@@ -7,38 +7,53 @@
 
 @layer base {
 
-  :root {
-    --color-primary: theme('colorPalette.primary');
-    --color-secondary: theme('colorPalette.secondary');
-    --color-tertiary: theme('colorPalette.tertiary');
-    --color-black: theme('colorPalette.black');
-    --color-black2: theme('colorPalette.black2');
-    --color-grey: theme('colorPalette.grey');
-    --color-grey2: theme('colorPalette.grey2');
-    --color-grey3: theme('colorPalette.grey3');
-    --color-grey4: theme('colorPalette.grey4');
-    --color-grey5: theme('colorPalette.grey5');
-    --color-text: #ffffff;
-  }
-
   .dark {
-    --color-primary: theme('colorPalette.primary');
-    --color-secondary: theme('colorPalette.secondary');
-    --color-tertiary: theme('colorPalette.tertiary');
-    --color-black: theme('colorPalette.black');
-    --color-black2: theme('colorPalette.black2');
-    --color-grey: theme('colorPalette.grey');
-    --color-grey2: theme('colorPalette.grey2');
-    --color-grey3: theme('colorPalette.grey3');
-    --color-grey4: theme('colorPalette.grey4');
-    --color-grey5: theme('colorPalette.grey5');
+    --color-primary: #FF5252;
+    /* bright red */
+    --color-secondary: #FFB900;
+    /* bright yellow */
+    --color-tertiary: #00E676;
+    /* bright green */
+    --color-black: #FFFFFF;
+    /* white */
+    --color-black2: #E0E0E0;
+    /* light gray */
+    --color-grey: #BDBDBD;
+    /* medium gray */
+    --color-grey2: #757575;
+    /* dark gray */
+    --color-grey3: #424242;
+    /* very dark gray */
+    --color-grey4: #212121;
+    /* almost black */
+    --color-grey5: #9E9E9E;
+    /* muted gray */
     --color-text: #ffffff;
   }
 
   .light {
-    --color-primary: #1a202c;
-    --color-secondary: theme('colorPalette.secondary');
-    --color-text: #1a202c;
+    --color-primary: #F16623;
+    /* bright orange */
+    --color-secondary: #17AEBF;
+    /* bright blue */
+    --color-tertiary: #F0A500;
+    /* golden yellow */
+    --color-black: #333333;
+    /* dark gray */
+    --color-black2: #1c1c24;
+    /* black */
+    --color-grey: #D3D3D3;
+    /* light gray */
+    --color-grey2: #A9A9A9;
+    /* medium gray */
+    --color-grey3: #ECECEC;
+    /* very light gray */
+    --color-grey4: #F7F7F7;
+    /* almost white */
+    --color-grey5: #BFBFBF;
+    /* muted gray */
+    --color-text: #1c1c24;
+
   }
 
   h1 {
