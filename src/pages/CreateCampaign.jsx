@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { ethers } from 'ethers'
-import { useStateContext } from '../context'
+import { useStateContext } from '../context/StateContext'
 import { money } from '../assets'
 import { CustomButton, FormField, Loader } from '../components'
 import { checkIfImage } from '../utils'

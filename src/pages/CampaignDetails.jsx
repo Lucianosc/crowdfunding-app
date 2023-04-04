@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { ethers } from 'ethers'
-import { useStateContext } from '../context'
+import { useStateContext } from '../context/StateContext'
 import { CustomButton, CountBox, Loader } from '../components'
 import { calculateBarPercentage, daysLeft } from '../utils'
 import { thirdweb } from '../assets'

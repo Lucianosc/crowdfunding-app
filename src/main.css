@@ -18,6 +18,27 @@
     --color-grey3: theme('colorPalette.grey3');
     --color-grey4: theme('colorPalette.grey4');
     --color-grey5: theme('colorPalette.grey5');
+    --color-text: #ffffff;
+  }
+
+  .dark {
+    --color-primary: theme('colorPalette.primary');
+    --color-secondary: theme('colorPalette.secondary');
+    --color-tertiary: theme('colorPalette.tertiary');
+    --color-black: theme('colorPalette.black');
+    --color-black2: theme('colorPalette.black2');
+    --color-grey: theme('colorPalette.grey');
+    --color-grey2: theme('colorPalette.grey2');
+    --color-grey3: theme('colorPalette.grey3');
+    --color-grey4: theme('colorPalette.grey4');
+    --color-grey5: theme('colorPalette.grey5');
+    --color-text: #ffffff;
+  }
+
+  .light {
+    --color-primary: #1a202c;
+    --color-secondary: theme('colorPalette.secondary');
+    --color-text: #1a202c;
   }
 
   h1 {

@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { CustomButton } from './'
 import { logo, menu, search, thirdweb } from '../assets'
 import { navlinks } from '../constants'
-import { useStateContext } from '../context'
+import { useStateContext } from '../context/StateContext'
 
 export default function Navbar() {
   const navigate = useNavigate()

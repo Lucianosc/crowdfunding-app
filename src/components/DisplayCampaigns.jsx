@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { useStateContext } from '../context'
+import { useStateContext } from '../context/StateContext'
 import { useNavigate } from 'react-router-dom'
 import { loader } from '../assets'
 import { CampaignCard } from '../components'

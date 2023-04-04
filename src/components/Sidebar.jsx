@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { navlinks } from '../constants'
 import { logo, sun } from '../assets'
+import { useThemeContext } from '../context/ThemeContext'
 
 const Icon = ({ styles, name, imgUrl, isActive, disable, handleClick }) => (
   <div
@@ -23,6 +24,7 @@ const Icon = ({ styles, name, imgUrl, isActive, disable, handleClick }) => (
 export default function Sidebar() {
   const navigate = useNavigate()
   const [isActive, setIsActive] = useState('dashboard')
+  const { isDarkTheme, toggleTheme } = useThemeContext()
 
   return (
     <div className="flex flex-col justify-between items-center sticky top-5 h-[93vh]">
@@ -47,7 +49,11 @@ export default function Sidebar() {
             />
           ))}
         </div>
-        <Icon styles="bg-[#1c1c24] shadow-secondary" imgUrl={sun} />
+        <Icon
+          styles="bg-[#1c1c24] shadow-secondary"
+          imgUrl={sun}
+          handleClick={() => toggleTheme()}
+        />
       </div>
     </div>
   )
