@@ -1,6 +1,7 @@
 import React from 'react'
 import { tagType, thirdweb } from '../assets'
 import { daysLeft } from '../utils'
+import { useThemeContext } from '../context/ThemeContext'
 
 export default function CampaignCard({
   owner,
@@ -13,10 +14,11 @@ export default function CampaignCard({
   handleClick,
 }) {
   const remainingDays = daysLeft(deadline)
+  const { isDarkTheme } = useThemeContext()
 
   return (
     <div
-      className="sm:w-[288px] w-full rounded-[15px] bg-[var(--color-black2)] cursor-pointer"
+      className="sm:w-[288px] w-full rounded-[15px] bg-[var(--color-background2)] cursor-pointer"
       onClick={handleClick}
     >
       <img
@@ -31,45 +33,81 @@ export default function CampaignCard({
             alt="tag"
             className="w-[17px] h-[17px] object-contain"
           />
-          <p className="ml-[12px] mt-[2px] font-medium text-[var(--color-grey)]">
+          <p
+            className={`ml-[12px] mt-[2px] font-medium ${
+              isDarkTheme ? 'dark' : 'light'
+            } text-[var(--color-text2)]`}
+          >
             Category
           </p>
         </div>
         <div className="block">
-          <h3 className="text-left truncate">{title}</h3>
-          <p className="mt-[5px] font-normal text-[var(--color-grey)] text-left truncate">
+          <h3 className={`text-left ${
+              isDarkTheme ? 'dark' : 'light'
+            } text-[var(--color-text)] truncate`}>{title}</h3>
+          <p
+            className={`mt-[5px] font-normal ${
+              isDarkTheme ? 'dark' : 'light'
+            } text-[var(--color-text2)] text-left truncate`}
+          >
             {description}
           </p>
         </div>
         <div className="flex justify-between flex-wrap mt-[15px] gap-2">
           <div className="flex flex-col">
-            <h4 className="font-semibold text-[var(--color-grey5)]">
+            <h4
+              className={`font-semibold ${
+                isDarkTheme ? 'dark' : 'light'
+              } text-[var(--color-text)]`}
+            >
               {amountCollected}
             </h4>
-            <p className="mt-[3px] text-[var(--color-grey5)] sm:max-w-[120px] truncate">
+            <p
+              className={`mt-[3px] ${
+                isDarkTheme ? 'dark' : 'light'
+              } text-[var(--color-text2)] sm:max-w-[120px] truncate`}
+            >
               Raised of {target}
             </p>
           </div>
           <div className="flex flex-col">
-            <h4 className="font-semibold text-[var(--color-grey5)]">
+            <h4
+              className={`font-semibold ${
+                isDarkTheme ? 'dark' : 'light'
+              } text-[var(--color-text)]`}
+            >
               {remainingDays}
             </h4>
-            <p className="mt-[3px] text-[var(--color-grey5)] sm:max-w-[120px] truncate">
+            <p
+              className={`mt-[3px] ${
+                isDarkTheme ? 'dark' : 'light'
+              } text-[var(--color-text2)] sm:max-w-[120px] truncate`}
+            >
               Days left
             </p>
           </div>
         </div>
         <div className="flex items-center mt-[20px] gap-[12px]">
-          <div className="flex justify-center items-center bg-[var(--color-black)] w-[30px] h-[30px] rounded-full ">
+          <div className="flex justify-center items-center bg-[var(--color-background)] w-[30px] h-[30px] rounded-full ">
             <img
               src={thirdweb}
               alt="user"
               className="w-1/2 h-1/2 object-contain"
             />
           </div>
-          <p className="flex-1 text-[var(--color-grey)] truncate">
+          <p
+            className={`flex-1 ${
+              isDarkTheme ? 'dark' : 'light'
+            } text-[var(--color-text2)] truncate`}
+          >
             by{' '}
-            <span className="ml-[2px] text-[var(--color-grey5)]">{owner}</span>
+            <span
+              className={`ml-[2px] ${
+                isDarkTheme ? 'dark' : 'light'
+              } text-[var(--color-text)]`}
+            >
+              {owner}
+            </span>
           </p>
         </div>
       </div>

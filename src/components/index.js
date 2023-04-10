@@ -6,3 +6,4 @@ export { default as DisplayCampaigns } from "./DisplayCampaigns";
 export { default as CampaignCard } from "./CampaignCard";
 export { default as CountBox } from "./CountBox";
 export { default as Loader } from "./Loader";
+export { default as Icon } from "./Icon";

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useThemeContext } from '../context/ThemeContext'
 
 export default function FormField({
   labelName,
@@ -8,10 +9,16 @@ export default function FormField({
   handleChange,
   isTextArea,
 }) {
+  const { isDarkTheme } = useThemeContext()
+
   return (
     <label className="flex flex-col flex-1 w-full ">
       {labelName && (
-        <span className=" font-medium text-[14px] leading-[22px] text-[#808191] mb-[10px]">
+        <span
+          className={`font-medium text-[16px] leading-[22px] ${
+            isDarkTheme ? 'dark' : 'light'
+          } text-[var(--color-text)] mb-[10px]`}
+        >
           {labelName}
         </span>
       )}
@@ -22,9 +29,11 @@ export default function FormField({
           placeholder={placeholder}
           onChange={handleChange}
           rows="10"
-          className="py-[15px] sm:px-[25px] sm:min-w-[300px] px-[15px] outline-none border-[1px]
-         border-[#3a3a43] bg-transparent  text-[14px] placeholder:text-[#4b5264] 
-         rounded-[10px]"
+          className={`py-[15px] sm:px-[25px] sm:min-w-[300px] px-[15px] outline-none border-[1px]
+          ${
+            isDarkTheme ? 'dark' : 'light'
+          } border-[var(--color-text)] text-[var(--color-text)] placeholder:text-[var(--color-text2)] bg-transparent  text-[14px]  
+         rounded-[10px]`}
         ></textarea>
       ) : (
         <input
@@ -34,9 +43,11 @@ export default function FormField({
           type={inputType}
           onChange={handleChange}
           step="0.1"
-          className="py-[15px] sm:px-[25px] sm:min-w-[300px] px-[15px] outline-none border-[1px]
-           border-[#3a3a43] bg-transparent  text-[14px] placeholder:text-[#4b5264] 
-           rounded-[10px]"
+          className={`py-[15px] sm:px-[25px] sm:min-w-[300px] px-[15px] outline-none border-[1px]
+          ${
+            isDarkTheme ? 'dark' : 'light'
+          } border-[var(--color-text)] text-[var(--color-text)] placeholder:text-[var(--color-text2)] bg-transparent  text-[14px] 
+           rounded-[10px]`}
         ></input>
       )}
     </label>

@@ -7,78 +7,73 @@
 
 @layer base {
 
-  .dark {
-    --color-primary: #FF5252;
+  .light {
+    --color-primary: #cb511f;
     /* bright red */
-    --color-secondary: #FFB900;
+    --color-secondary: #e7e7cb;
     /* bright yellow */
-    --color-tertiary: #00E676;
+    --color-tertiary: #525239;
     /* bright green */
-    --color-black: #FFFFFF;
+    --color-background: #cfc9d7;
     /* white */
-    --color-black2: #E0E0E0;
+    --color-background2: #EAECEF;
+
+    --color-background3: #c6cbd2;
     /* light gray */
     --color-grey: #BDBDBD;
     /* medium gray */
     --color-grey2: #757575;
-    /* dark gray */
-    --color-grey3: #424242;
-    /* very dark gray */
-    --color-grey4: #212121;
-    /* almost black */
-    --color-grey5: #9E9E9E;
-    /* muted gray */
-    --color-text: #ffffff;
-  }
 
-  .light {
-    --color-primary: #F16623;
-    /* bright orange */
-    --color-secondary: #17AEBF;
-    /* bright blue */
-    --color-tertiary: #F0A500;
-    /* golden yellow */
-    --color-black: #333333;
-    /* dark gray */
-    --color-black2: #1c1c24;
-    /* black */
-    --color-grey: #D3D3D3;
-    /* light gray */
-    --color-grey2: #A9A9A9;
-    /* medium gray */
-    --color-grey3: #ECECEC;
-    /* very light gray */
-    --color-grey4: #F7F7F7;
-    /* almost white */
-    --color-grey5: #BFBFBF;
-    /* muted gray */
     --color-text: #1c1c24;
 
+    --color-text2: #2e2e34;
+  }
+
+  .dark {
+    --color-primary: #cb511f;
+    /* bright orange */
+    --color-secondary: #e7e7cb;
+    /* bright blue */
+    --color-tertiary: #525239;
+    /* golden yellow */
+    --color-background: #2d2d31;
+    /* dark gray */
+    --color-background2: #0e1a21;
+
+    --color-background3: #1b242a;
+    /* black */
+    --color-grey: #A9A9A9;
+    /* light gray */
+    --color-grey2: #A9A9A9;
+    /* muted gray */
+    --color-text: #e9e9d5;
+
+    --color-text2: #c6c6b6;
   }
 
   h1 {
-    @apply text-[18px] text-white font-roboto
+    @apply text-[18px] font-roboto
   }
 
   h2 {
-    @apply text-white font-roboto
+    @apply  font-roboto
   }
 
   h3 {
-    @apply text-white font-semibold text-[16px] leading-[26px] font-roboto
+    @apply  font-semibold text-[16px] leading-[26px] font-roboto
   }
 
   h4 {
 
-    @apply text-[14px] text-white leading-[22px] font-roboto
+    @apply text-[14px]  leading-[22px] font-roboto
   }
 
   p {
-    @apply text-white text-[12px] leading-[18px] font-roboto
+    @apply  text-[12px] leading-[18px] font-roboto
   }
 
   input, textarea {
-    @apply text-white font-roboto
+    @apply  font-roboto
   }
 
   button {

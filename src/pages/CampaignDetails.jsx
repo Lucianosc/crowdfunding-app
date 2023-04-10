@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { ethers } from 'ethers'
 import { useStateContext } from '../context/StateContext'
+import { useThemeContext } from '../context/ThemeContext'
 import { CustomButton, CountBox, Loader } from '../components'
 import { calculateBarPercentage, daysLeft } from '../utils'
 import { thirdweb } from '../assets'
@@ -9,6 +10,7 @@ import { thirdweb } from '../assets'
 export default function CampaignDetails() {
   const { state } = useLocation()
   const navigate = useNavigate()
+  const { isDarkTheme } = useThemeContext()
 
   const {
     getDonationsByCampaignId,
@@ -74,9 +76,19 @@ export default function CampaignDetails() {
       <div className="mt-[60px] flex lg:flex-row flex-col gap-5">
         <div className="flex-[2] flex flex-col gap-[40px]">
           <div>
-            <h4 className="text-[18px] font-semibold uppercase">Creator</h4>
+            <h4
+              className={`text-[18px] ${
+                isDarkTheme ? 'dark' : 'light'
+              } text-[var(--color-text)] font-semibold uppercase`}
+            >
+              Creator
+            </h4>
             <div className="mt-[20px] flex flex-row items-center flex-wrap gap-[14px]">
-              <div className="w-[52px] h-[52px] flex items-center justify-center rounded-full bg-[var(--color-grey4)] cursor-pointer">
+              <div
+                className={`w-[52px] h-[52px] flex items-center justify-center rounded-full ${
+                  isDarkTheme ? 'dark' : 'light'
+                }} bg-[var(--color-background2)] cursor-pointer`}
+              >
                 <img
                   src={thirdweb}
                   alt="user"
@@ -84,10 +96,18 @@ export default function CampaignDetails() {
                 />
               </div>
               <div>
-                <h4 className="font-semibold text-[14px] break-all">
+                <h4
+                  className={`font-semibold text-[14px] ${
+                    isDarkTheme ? 'dark' : 'light'
+                  } text-[var(--color-text2)] break-all`}
+                >
                   {state.owner}
                 </h4>
-                <p className="mt-[4px] font-normal text-[var(--color-grey)]">
+                <p
+                  className={`mt-[4px] font-normal ${
+                    isDarkTheme ? 'dark' : 'light'
+                  } text-[var(--color-text2)]`}
+                >
                   10 campaigns
                 </p>
               </div>
@@ -95,16 +115,32 @@ export default function CampaignDetails() {
           </div>
 
           <div>
-            <h4 className="text-[18px] font-semibold uppercase">Story</h4>
+            <h4
+              className={`text-[18px] ${
+                isDarkTheme ? 'dark' : 'light'
+              } text-[var(--color-text)] font-semibold uppercase`}
+            >
+              Story
+            </h4>
             <div className="mt-[20px]">
-              <p className=" font-normal text-[16px] leading-[26px] text-justify text-[var(--color-grey)]">
+              <p
+                className=" font-normal text-[16px] leading-[26px] text-justify ${
+              isDarkTheme ? 'dark' : 'light'
+            } text-[var(--color-text2)]"
+              >
                 {state.description}
               </p>
             </div>
           </div>
 
           <div>
-            <h4 className="text-[18px] font-semibold uppercase">Donators</h4>
+            <h4
+              className={`text-[18px] ${
+                isDarkTheme ? 'dark' : 'light'
+              } text-[var(--color-text)] font-semibold uppercase`}
+            >
+              Donators
+            </h4>
             <div className="mt-[20px] flex flex-col gap-4">
               {donators.length > 0 ? (
                 donators.map((item, index) => (
@@ -112,16 +148,28 @@ export default function CampaignDetails() {
                     key={`${item.donator}-${index}`}
                     className="flex justify-between items-center gap-4"
                   >
-                    <p className="text-[16px] text-[var(--color-grey5)] leading-[26px] break-all">
+                    <p
+                      className={`text-[16px] ${
+                        isDarkTheme ? 'dark' : 'light'
+                      } text-[var(--color-text2)] leading-[26px] break-all`}
+                    >
                       {index + 1}. {item.donator}
                     </p>
-                    <p className="text-[16px] text-[var(--color-grey5)] leading-[26px] break-all">
+                    <p
+                      className={`text-[16px] ${
+                        isDarkTheme ? 'dark' : 'light'
+                      } text-[var(--color-text2)] leading-[26px] break-all`}
+                    >
                       {item.donation} ETH
                     </p>
                   </div>
                 ))
               ) : (
-                <p className=" font-normal text-[16px] leading-[26px] text-justify text-[var(--color-grey)]">
+                <p
+                  className={` font-normal text-[16px] leading-[26px] text-justify ${
+                    isDarkTheme ? 'dark' : 'light'
+                  } text-[var(--color-text2)]`}
+                >
                   No donators yet. Be the first one!
                 </p>
               )}
@@ -129,9 +177,19 @@ export default function CampaignDetails() {
           </div>
 
           <div className="flex-1">
-            <h4 className="text-[18px] font-semibold uppercase">Fund</h4>
-            <div className="mt-[20px] flex flex-col p-4 bg-[var(--color-black2)] rounded-[10px]">
-              <p className="font-medium text-[20px] leading-[30px] text-center text-[var(--color-grey)]">
+            <h4
+              className={`text-[18px] ${
+                isDarkTheme ? 'dark' : 'light'
+              } text-[var(--color-text)] font-semibold uppercase`}
+            >
+              Fund
+            </h4>
+            <div className="mt-[20px] flex flex-col p-4 bg-[var(--color-background2)] rounded-[10px]">
+              <p
+                className={`font-medium text-[20px] leading-[30px] text-center ${
+                  isDarkTheme ? 'dark' : 'light'
+                } text-[var(--color-text)]`}
+              >
                 Fund the campaign
               </p>
               <div className="mt-[30px] ">
@@ -139,17 +197,25 @@ export default function CampaignDetails() {
                   type="number"
                   placeholder="ETH 0.1"
                   step="0.01"
-                  className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] 
-                  border-[var(--color-grey3)] bg-transparent text-[18px] leading-[30px] placeholder:text-[var(--color-grey2)]
-                  rounded-[10px]"
+                  className={`w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] 
+                  border-[var(--color-text2)] bg-transparent text-[18px] leading-[30px] placeholder:text-[var(--color-text2)] text-[var(--color-text)]
+                  rounded-[10px]`}
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                 />
-                <div className="my-[20px] p-4 bg-[var(--color-black)] rounded-[10px]">
-                  <h4 className="font-semibold text-[14px] leading-[22px]">
+                <div className="my-[20px] p-4 bg-[var(--color-background)] rounded-[10px]">
+                  <h4
+                    className={`font-semibold ${
+                      isDarkTheme ? 'dark' : 'light'
+                    } text-[var(--color-text)] text-[14px] leading-[22px]`}
+                  >
                     Back it because you belive in it.
                   </h4>
-                  <p className="mt-[20px] leading-[22px] text-[var(--color-grey)]">
+                  <p
+                    className={`mt-[20px] leading-[22px] ${
+                      isDarkTheme ? 'dark' : 'light'
+                    } text-[var(--color-text2)]`}
+                  >
                     Support the proyect for no reward, just because it speaks to
                     you.
                   </p>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-import { ethers } from 'ethers'
+import { useNavigate } from 'react-router-dom'
 import { useStateContext } from '../context/StateContext'
+import { useThemeContext } from '../context/ThemeContext'
 import { money } from '../assets'
 import { CustomButton, FormField, Loader } from '../components'
 import { checkIfImage } from '../utils'
@@ -18,6 +18,7 @@ export default function CreateCampaign() {
     image: '',
   })
   const { createCampaign } = useStateContext()
+  const { isDarkTheme } = useThemeContext()
 
   const handleFormFieldChange = (fieldName, e) => {
     setForm({ ...form, [fieldName]: e.target.value })
@@ -41,10 +42,22 @@ export default function CreateCampaign() {
   }
 
   return (
-    <div className="flex flex-col rounded-[10px] sm:p-10 p-4 justify-center items-center bg-[#1c1c24]">
+    <div
+      className={`flex flex-col rounded-[10px] sm:p-10 p-4 justify-center items-center ${
+        isDarkTheme ? 'dark' : 'light'
+      } bg-[var(--color-background2)] `}
+    >
       {isLoading && <Loader />}
-      <div className="flex justify-center items-center p-[16px] sm:min-w-[380px] bg-[#3a3a43] rounded-[10px]">
-        <h1 className=" font-bold sm:text-[25px] leading-[38px]">
+      <div
+        className={`flex justify-center items-center p-[16px] sm:min-w-[380px]  ${
+          isDarkTheme ? 'dark' : 'light'
+        } bg-[var(--color-background)] rounded-[10px]`}
+      >
+        <h1
+          className={`font-bold sm:text-[25px] leading-[38px] ${
+            isDarkTheme ? 'dark' : 'light'
+          } text-[var(--color-text)]`}
+        >
           Start a Campaign
         </h1>
       </div>
@@ -75,13 +88,15 @@ export default function CreateCampaign() {
           value={form.description}
           handleChange={(e) => handleFormFieldChange('description', e)}
         />
-        <div className="flex w-full p-4 justify-start items-center bg-[#8c6dfd] h-[120px] rounded-[10px]">
+        <div className={`flex w-full p-4 justify-start items-center bg-[var(--color-tertiary)] h-[120px] rounded-[10px]`}>
           <img
             src={money}
             alt="money"
             className="w-[40px] h-[40px] object-contain"
           />
-          <h4 className=" font-bold text-[24px] ml-[20px]">
+          <h4
+            className={`font-bold text-[24px] text-[var(--color-secondary)] ml-[20px]`}
+          >
             You will get 100% of raised amount
           </h4>
         </div>
@@ -112,7 +127,9 @@ export default function CreateCampaign() {
           <CustomButton
             btnType="submit"
             title="Submit new campaign"
-            styles="bg-[#1dc071]"
+            styles={`${
+              isDarkTheme ? 'dark' : 'light'
+            } bg-[var(--color-primary)] text-[var(--color-secondary)] `}
           ></CustomButton>
         </div>
       </form>

@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { useStateContext } from '../context/StateContext'
+import { useThemeContext } from '../context/ThemeContext'
 import { useNavigate } from 'react-router-dom'
 import { loader } from '../assets'
 import { CampaignCard } from '../components'
 
 export default function DisplayCampaigns({ title, isFilteredByOwner = false }) {
   const navigate = useNavigate()
-
+  const { isDarkTheme } = useThemeContext()
   const [isLoading, setIsLoading] = useState(true)
   const [campaigns, setCampaigns] = useState([])
 
@@ -29,7 +30,9 @@ export default function DisplayCampaigns({ title, isFilteredByOwner = false }) {
 
   return (
     <div>
-      <h1 className=" font-semibold text-left">
+      <h1
+        className={`font-semibold text-left ${isDarkTheme ? 'dark' : 'light'} text-[var(--color-text)]`}
+      >
         {title} ({campaigns.length})
       </h1>
       <div className="flex flex-wrap mt-[20px] gap-[26px]">
