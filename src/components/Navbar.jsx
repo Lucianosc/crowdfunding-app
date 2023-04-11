@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { CustomButton } from './'
 import { logo, menu, search, thirdweb, sun } from '../assets'
 import { navlinks } from '../constants'
 import { useStateContext } from '../context/StateContext'
 import { useThemeContext } from '../context/ThemeContext'
-import { Icon } from '../components'
+import { NavItem } from '../components'
 
 export default function Navbar() {
   const navigate = useNavigate()
-  const [isActive, setIsActive] = useState('dashboard')
   const [toggleDrawer, setToggleDrawer] = useState(false)
   const drawerRef = useRef(null)
   const { isDarkTheme, toggleTheme } = useThemeContext()
+  const location = useLocation()
 
   const { address, connect } = useStateContext()
 
@@ -30,9 +30,13 @@ export default function Navbar() {
     }
   }
   return (
-    <div className="flex md:flex-row flex-col-reverse justify-between mb-[35px] gap-6">
+    <div className="flex sm:flex-row flex-col-reverse justify-between mb-[35px] gap-6">
       <div
         className={`lg:flex-1 flex flex-row max-w-[458px] py-2 pl-4 pr-2 h-[52px] ${
+          location.pathname === '/' || location.pathname === '/profile'
+            ? ''
+            : ' md:invisible hidden md:block'
+        } ${
           isDarkTheme ? 'dark' : 'light'
         } bg-[var(--color-background2)] rounded-[100px]`}
       >
@@ -59,7 +63,7 @@ export default function Navbar() {
       <div className="sm:flex flex-row hidden justify-end gap-4 ">
         <CustomButton
           btnType="button"
-          title={address ? 'Create campaign' : 'Connect'}
+          title={address ? 'Create campaign' : 'Connect wallet'}
           styles="bg-[var(--color-primary)] text-[var(--color-secondary)]"
           handleClick={() => {
             if (address) navigate('create-campaign')
@@ -81,7 +85,7 @@ export default function Navbar() {
         </Link>
       </div>
       {/* mobile nav */}
-      <div className="flex justify-between items-center relative sm:hidden ">
+      <div className="flex justify-between items-center relative sm:hidden">
         <div
           className={`flex justify-center items-center w-[40px] h-[40px] rounded-[10px] ${
             isDarkTheme ? 'dark' : 'light'
@@ -100,66 +104,75 @@ export default function Navbar() {
           onClick={() => setToggleDrawer((prev) => !prev)}
         />
         <div
-          className={`absolute top-[60px] right-0 left-0 ${
-            isDarkTheme ? 'dark' : 'light'
-          } bg-[var(--color-background2)] z-10 shadow-secondary py-4 ${
+          className={`fixed top-[0px] right-0 left-0 z-10 shadow-secondary  ${
             toggleDrawer ? 'translate-y-0' : '-translate-y-[100vh] '
           } transition-all duration-700`}
           ref={drawerRef}
         >
-          <ul className="mb-4">
-            {navlinks.map((link) => (
-              <li
-                key={link.name}
-                className={`flex p-4 ${
-                  isActive === link.name && 'bg-[var(--color-background)] '
-                } 
+          <div className="bg-[var(--color-background2)] pb-8 pt-4">
+            <ul className="mb-4">
+              {navlinks.map((link) => (
+                <li
+                  key={link.name}
+                  className={`flex p-4 ${
+                    location.pathname === link.link &&
+                    'bg-[var(--color-background)] '
+                  } 
                  ${link.disabled && 'opacity-30'}`}
-                onClick={() => {
-                  if (!link.disabled) {
-                    setIsActive(link.name)
-                    setToggleDrawer(false)
-                    navigate(link.link)
-                  }
-                }}
-              >
-                <img
-                  src={link.imgUrl}
-                  alt={link.name}
-                  className={` w-[24px] h-[24px] object-contain ${
-                    isActive === link.name ? 'grayscale-0' : 'grayscale'
-                  }`}
-                />
-                <p
-                  className={`ml-[20px]  font-semibold text-[14px] ${
-                    isActive === link.name ? 'text-[#1dc071]' : 'text-[#808191]'
-                  }`}
+                  onClick={() => {
+                    if (!link.disabled) {
+                      setToggleDrawer(false)
+                      navigate(link.link)
+                    }
+                  }}
                 >
-                  {link.name}
-                </p>
-              </li>
-            ))}
-          </ul>
-          <div className="flex mx-4 justify-between">
-            <CustomButton
-              btnType="button"
-              title={address ? 'Create campaign' : 'Connect'}
-              styles="bg-[var(--color-primary)] text-[var(--color-secondary)]"
-              handleClick={() => {
-                setToggleDrawer(false)
-                if (address) navigate('create-campaign')
-                else connect()
-              }}
-            />
-            <Icon
-              styles={` ${
-                isDarkTheme ? 'dark' : 'light'
-              } bg-[var(--color-background)] shadow-secondary`}
-              imgUrl={sun}
-              handleClick={() => toggleTheme()}
-            />
+                  <img
+                    src={link.imgUrl}
+                    alt={link.name}
+                    className={` w-[24px] h-[24px] object-contain ${
+                      location.pathname === link.link
+                        ? 'grayscale-0'
+                        : 'grayscale'
+                    }`}
+                  />
+                  <p
+                    className={`ml-[20px]  font-semibold text-[14px] ${
+                      location.pathname === link.link
+                        ? 'text-[var(--color-text)]'
+                        : 'text-[#808191]'
+                    }`}
+                  >
+                    {link.name}
+                  </p>
+                </li>
+              ))}
+            </ul>
+            <div className="flex mx-4 justify-between">
+              <CustomButton
+                btnType="button"
+                title={address ? 'Create campaign' : 'Connect wallet'}
+                styles="bg-[var(--color-primary)] text-[var(--color-secondary)]"
+                handleClick={() => {
+                  setToggleDrawer(false)
+                  if (address) navigate('create-campaign')
+                  else connect()
+                }}
+              />
+              <NavItem
+                styles={` ${
+                  isDarkTheme ? 'dark' : 'light'
+                } bg-[var(--color-background)] shadow-secondary`}
+                imgUrl={sun}
+                handleClick={() => toggleTheme()}
+              />
+            </div>
           </div>
         </div>
+        <div
+          className={`fixed top-0 left-0 bg-[var(--color-text)] opacity-40 h-[1000px] w-full ${
+            toggleDrawer ? 'z-5' : 'z-[-1]'
+          } transition-all duration-200`}
+        ></div>
       </div>
     </div>
   )

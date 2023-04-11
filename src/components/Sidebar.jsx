@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { navlinks } from '../constants'
 import { logo, sun } from '../assets'
 import { useThemeContext } from '../context/ThemeContext'
-import { Icon } from '../components'
+import { NavItem } from '../components'
 
 export default function Sidebar() {
   const navigate = useNavigate()
@@ -11,7 +11,7 @@ export default function Sidebar() {
 
   return (
     <div className="flex flex-col justify-between items-center sticky top-5 h-[93vh]">
-      <Icon
+      <NavItem
         styles={`w-[52px] h-[52px] ${
           isDarkTheme ? 'dark' : 'light'
         } bg-[var(--color-background2)]`}
@@ -26,7 +26,7 @@ export default function Sidebar() {
       >
         <div className="flex flex-col justify-center items-center gap-3">
           {navlinks.map((link) => (
-            <Icon
+            <NavItem
               isDarkTheme={isDarkTheme}
               key={link.name}
               imgUrl={link.imgUrl}
@@ -41,7 +41,7 @@ export default function Sidebar() {
             />
           ))}
         </div>
-        <Icon
+        <NavItem
           styles={` ${
             isDarkTheme ? 'dark' : 'light'
           } bg-[var(--color-background)] shadow-secondary`}

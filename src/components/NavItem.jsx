@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 
-export default function Icon({
+export default function NavItem({
   styles,
   imgUrl,
   disable,
