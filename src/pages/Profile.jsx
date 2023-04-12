@@ -2,6 +2,12 @@ import React from 'react'
 
 import { DisplayCampaigns } from '../components'
 
-export default function Profile() {
-  return <DisplayCampaigns title="My campaigns" isFilteredByOwner={true} />
+export default function Profile({ campaignsFilter }) {
+  return (
+    <DisplayCampaigns
+      campaignsFilter={campaignsFilter}
+      title="My campaigns"
+      isFilteredByOwner={true}
+    />
+  )
 }

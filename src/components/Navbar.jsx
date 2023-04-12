@@ -7,7 +7,7 @@ import { useStateContext } from '../context/StateContext'
 import { useThemeContext } from '../context/ThemeContext'
 import { NavItem } from '../components'
 
-export default function Navbar() {
+export default function Navbar({ handleCallback }) {
   const navigate = useNavigate()
   const [toggleDrawer, setToggleDrawer] = useState(false)
   const drawerRef = useRef(null)
@@ -29,6 +29,22 @@ export default function Navbar() {
       setToggleDrawer(false)
     }
   }
+
+  const debounce = (func, delay) => {
+    let timeoutId;
+    return (...args) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  }  
+
+  const handleSearch = (e) => {
+    const processChange = debounce(() => handleCallback(e.target.value), 600)
+    processChange()
+  }
+
   return (
     <div className="flex sm:flex-row flex-col-reverse justify-between mb-[35px] gap-6">
       <div
@@ -46,6 +62,7 @@ export default function Navbar() {
           className={`flex w-full foont-roboto text-[14px] ${
             isDarkTheme ? 'dark' : 'light'
           } placeholder:text-[var(--color-text2)] text-[var(--color-text)] bg-transparent outline-none pr-2`}
+          onChange={handleSearch}
         />
         <div
           className={`flex justify-center items-center cursor-pointer w-[72px] h-full rounded-[20px] ${
@@ -111,44 +128,41 @@ export default function Navbar() {
         >
           <div className="bg-[var(--color-background2)] pb-8 pt-4">
             <ul className="mb-4">
-              {navlinks.map((link) => {
-                console.log(location.pathname, link.link)
-                return (
-                  <li
-                    key={link.name}
-                    className={`flex p-4 ${
-                      location.pathname === link.link &&
-                      'bg-[var(--color-background)] '
-                    } 
+              {navlinks.map((link) => (
+                <li
+                  key={link.name}
+                  className={`flex p-4 ${
+                    location.pathname === link.link &&
+                    'bg-[var(--color-background)] '
+                  } 
                  ${link.disabled && 'opacity-30'}`}
-                    onClick={() => {
-                      if (!link.disabled) {
-                        setToggleDrawer(false)
-                        navigate(link.link)
-                      }
-                    }}
+                  onClick={() => {
+                    if (!link.disabled) {
+                      setToggleDrawer(false)
+                      navigate(link.link)
+                    }
+                  }}
+                >
+                  <img
+                    src={link.imgUrl}
+                    alt={link.name}
+                    className={` w-[24px] h-[24px] object-contain ${
+                      location.pathname === link.link
+                        ? 'grayscale-0'
+                        : 'grayscale'
+                    }`}
+                  />
+                  <p
+                    className={`ml-[20px]  font-semibold text-[14px] ${
+                      location.pathname === link.link
+                        ? 'text-[var(--color-text)]'
+                        : 'text-[#808191]'
+                    }`}
                   >
-                    <img
-                      src={link.imgUrl}
-                      alt={link.name}
-                      className={` w-[24px] h-[24px] object-contain ${
-                        location.pathname === link.link
-                          ? 'grayscale-0'
-                          : 'grayscale'
-                      }`}
-                    />
-                    <p
-                      className={`ml-[20px]  font-semibold text-[14px] ${
-                        location.pathname === link.link
-                          ? 'text-[var(--color-text)]'
-                          : 'text-[#808191]'
-                      }`}
-                    >
-                      {link.name}
-                    </p>
-                  </li>
-                )
-              })}
+                    {link.name}
+                  </p>
+                </li>
+              ))}
             </ul>
             <div className="flex mx-4 justify-between">
               <CustomButton
