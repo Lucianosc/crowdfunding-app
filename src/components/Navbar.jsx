@@ -35,7 +35,7 @@ export default function Navbar() {
         className={`lg:flex-1 flex flex-row max-w-[458px] py-2 pl-4 pr-2 h-[52px] ${
           location.pathname === '/' || location.pathname === '/profile'
             ? ''
-            : ' md:invisible hidden md:block'
+            : ' sm:invisible hidden sm:block'
         } ${
           isDarkTheme ? 'dark' : 'light'
         } bg-[var(--color-background2)] rounded-[100px]`}
@@ -111,41 +111,44 @@ export default function Navbar() {
         >
           <div className="bg-[var(--color-background2)] pb-8 pt-4">
             <ul className="mb-4">
-              {navlinks.map((link) => (
-                <li
-                  key={link.name}
-                  className={`flex p-4 ${
-                    location.pathname === link.link &&
-                    'bg-[var(--color-background)] '
-                  } 
+              {navlinks.map((link) => {
+                console.log(location.pathname, link.link)
+                return (
+                  <li
+                    key={link.name}
+                    className={`flex p-4 ${
+                      location.pathname === link.link &&
+                      'bg-[var(--color-background)] '
+                    } 
                  ${link.disabled && 'opacity-30'}`}
-                  onClick={() => {
-                    if (!link.disabled) {
-                      setToggleDrawer(false)
-                      navigate(link.link)
-                    }
-                  }}
-                >
-                  <img
-                    src={link.imgUrl}
-                    alt={link.name}
-                    className={` w-[24px] h-[24px] object-contain ${
-                      location.pathname === link.link
-                        ? 'grayscale-0'
-                        : 'grayscale'
-                    }`}
-                  />
-                  <p
-                    className={`ml-[20px]  font-semibold text-[14px] ${
-                      location.pathname === link.link
-                        ? 'text-[var(--color-text)]'
-                        : 'text-[#808191]'
-                    }`}
+                    onClick={() => {
+                      if (!link.disabled) {
+                        setToggleDrawer(false)
+                        navigate(link.link)
+                      }
+                    }}
                   >
-                    {link.name}
-                  </p>
-                </li>
-              ))}
+                    <img
+                      src={link.imgUrl}
+                      alt={link.name}
+                      className={` w-[24px] h-[24px] object-contain ${
+                        location.pathname === link.link
+                          ? 'grayscale-0'
+                          : 'grayscale'
+                      }`}
+                    />
+                    <p
+                      className={`ml-[20px]  font-semibold text-[14px] ${
+                        location.pathname === link.link
+                          ? 'text-[var(--color-text)]'
+                          : 'text-[#808191]'
+                      }`}
+                    >
+                      {link.name}
+                    </p>
+                  </li>
+                )
+              })}
             </ul>
             <div className="flex mx-4 justify-between">
               <CustomButton
