@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { tagType, thirdweb } from '../assets'
 import { daysLeft } from '../utils'
 import { useThemeContext } from '../context/ThemeContext'
@@ -15,17 +15,31 @@ export default function CampaignCard({
 }) {
   const remainingDays = daysLeft(deadline)
   const { isDarkTheme } = useThemeContext()
+  const [imageError, setImageError] = useState(false)
+
+  const handleImageError = () => {
+    setImageError(true)
+  }
 
   return (
     <div
       className="sm:w-[288px] w-full rounded-[15px] bg-[var(--color-background2)] cursor-pointer"
       onClick={handleClick}
     >
-      <img
-        src={image}
-        alt="fund"
-        className="w-full h-[158px] object-cover rounded-[15px]"
-      />
+      {imageError ? (
+        <div className="w-full h-[158px] rounded-[15px] flex justify-center items-center">
+          <p className={` text-[var(--color-text)]`}>
+            Image failed to load
+          </p>
+        </div>
+      ) : (
+        <img
+          src={image}
+          alt="fund"
+          className="w-full h-[158px] object-cover rounded-[15px]"
+          onError={handleImageError}
+        />
+      )}
       <div className="flex flex-col p-4 ">
         <div className="flex flex-row items-center mb-[18px]">
           <img
@@ -42,9 +56,13 @@ export default function CampaignCard({
           </p>
         </div>
         <div className="block">
-          <h3 className={`text-left ${
+          <h3
+            className={`text-left ${
               isDarkTheme ? 'dark' : 'light'
-            } text-[var(--color-text)] truncate`}>{title}</h3>
+            } text-[var(--color-text)] truncate`}
+          >
+            {title}
+          </h3>
           <p
             className={`mt-[5px] font-normal ${
               isDarkTheme ? 'dark' : 'light'

@@ -22,6 +22,11 @@ export default function CampaignDetails() {
   const [amount, setAmount] = useState(0)
   const [donators, setDonators] = useState([])
   const remainingDays = daysLeft(state?.deadline)
+  const [imageError, setImageError] = useState(false)
+
+  const handleImageError = () => {
+    setImageError(true)
+  }
 
   const fetchDonators = async () => {
     const donators = await getDonationsByCampaignId(state.id)
@@ -40,18 +45,30 @@ export default function CampaignDetails() {
     if (contract) fetchDonators()
   }, [contract])
 
-  console.log(donators)
   return (
     <div>
       {isLoading && <Loader />}
       <div className="w-full flex md:flex-row flex-col mt-10 gap-[30px]">
         <div className="flex-1 flex-col">
-          <img
-            src={state.image}
-            alt="campaign"
-            className="w-full h-[410px] object-cover rounded-xl"
-          />
-          <div className="relative w-full h-[5px] bg-[var(--color-grey3)] mt-2 rounded-full">
+          {imageError ? (
+            <div className="w-full h-[410px] rounded-[15px] flex justify-center items-center">
+              <p
+                className={`${
+                  isDarkTheme ? 'dark' : 'light'
+                } text-[var(--color-text)]`}
+              >
+                Image failed to load
+              </p>
+            </div>
+          ) : (
+            <img
+              src={state.image}
+              alt="campaign"
+              className="w-full h-[410px] object-cover rounded-xl"
+              onError={handleImageError}
+            />
+          )}
+          <div className="relative w-full h-[5px] bg-[var(--color-background2)] mt-2 rounded-full">
             <div
               className="w-[30px] bg-[var(--color-primary)] h-full rounded-full"
               style={{
