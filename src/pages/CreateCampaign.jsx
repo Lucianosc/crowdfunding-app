@@ -17,7 +17,7 @@ export default function CreateCampaign() {
     deadline: '',
     image: '',
   })
-  const { createCampaign } = useStateContext()
+  const { createCampaign, address } = useStateContext()
   const { isDarkTheme } = useThemeContext()
 
   const handleFormFieldChange = (fieldName, e) => {
@@ -88,7 +88,9 @@ export default function CreateCampaign() {
           value={form.description}
           handleChange={(e) => handleFormFieldChange('description', e)}
         />
-        <div className={`flex w-full p-4 justify-start items-center bg-[var(--color-tertiary)] h-[120px] rounded-[10px]`}>
+        <div
+          className={`flex w-full p-4 justify-start items-center bg-[var(--color-tertiary)] h-[120px] rounded-[10px]`}
+        >
           <img
             src={money}
             alt="money"
@@ -126,10 +128,13 @@ export default function CreateCampaign() {
         <div className="flex justify-center items-center mt-[30px]">
           <CustomButton
             btnType="submit"
-            title="Submit new campaign"
+            title={` ${
+              address ? 'Submit new campaign' : 'Please connect your wallet'
+            }`}
             styles={`${
               isDarkTheme ? 'dark' : 'light'
             } bg-[var(--color-primary)] text-[var(--color-secondary)] `}
+            disabled={address ? false : true}
           ></CustomButton>
         </div>
       </form>

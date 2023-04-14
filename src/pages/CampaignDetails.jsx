@@ -193,7 +193,7 @@ export default function CampaignDetails() {
             </div>
           </div>
 
-          <div className="flex-1">
+          <div className="flex-1 justify-center">
             <h4
               className={`text-[18px] ${
                 isDarkTheme ? 'dark' : 'light'
@@ -237,12 +237,15 @@ export default function CampaignDetails() {
                     you.
                   </p>
                 </div>
-                <div>
+                <div className="flex justify-center">
                   <CustomButton
                     btnType="button"
-                    title="Fund Campaign"
-                    styles="w-full bg-[var(--color-secondary)]"
+                    title={
+                      address ? 'Fund Campaign' : 'Please connect your wallet'
+                    }
+                    styles="w-full bg-[var(--color-primary)] text-[var(--color-secondary)] max-w-[240px] "
                     handleClick={() => handleDonate()}
+                    disabled={address ? false : true}
                   />
                 </div>
               </div>
