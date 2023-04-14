@@ -8,6 +8,7 @@ export default function NavItem({
   handleClick,
   isDarkTheme,
   link = false,
+  name,
 }) {
   const location = useLocation()
   return (
@@ -20,6 +21,7 @@ export default function NavItem({
         disable ? 'opacity-30' : 'cursor-pointer'
       } ${styles}`}
       onClick={handleClick}
+      title={name}
     >
       <img
         src={imgUrl}

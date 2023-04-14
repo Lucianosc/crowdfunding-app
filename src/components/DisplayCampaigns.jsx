@@ -70,7 +70,7 @@ export default function DisplayCampaigns({
         ) : (
           campaigns.length === 0 && (
             <p className=" font-semibold text-[14px] leading-[30px] text-[#818183]">
-              We could not found any campaign
+              We could not find any campaigns
             </p>
           )
         )}

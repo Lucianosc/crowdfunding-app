@@ -22,7 +22,7 @@ export default function App() {
         <Sidebar />
       </div>
 
-      <div className="flex flex-col max-sm:w-full max-w-[1280px] mx-auto sm:pr-5">
+      <div className="flex flex-col max-sm:w-full w-full max-w-[1280px] mx-auto sm:pr-5">
         <Navbar handleCallback={filterCampaigns} />
         <Routes>
           <Route
