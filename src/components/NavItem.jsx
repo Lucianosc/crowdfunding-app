@@ -13,7 +13,7 @@ export default function NavItem({
   const location = useLocation()
   return (
     <div
-      className={`w-[48px] h-[48px] rounded-[10px]   ${
+      className={`w-[48px] h-[48px] rounded-[10px]  ${
         isDarkTheme ? 'dark' : 'light'
       } ${
         location.pathname === link && 'bg-[var(--color-background)]'

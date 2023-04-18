@@ -23,20 +23,19 @@ export default function CampaignCard({
 
   return (
     <div
-      className="sm:w-[288px] w-full rounded-[15px] bg-[var(--color-background2)] cursor-pointer"
+      className="sm:w-[288px] w-full rounded-2xl bg-[var(--color-background2)] 
+      cursor-pointer hover:scale-[102%] transition duration-200 ease-in-out"
       onClick={handleClick}
     >
       {imageError ? (
-        <div className="w-full h-[158px] rounded-[15px] flex justify-center items-center">
-          <p className={` text-[var(--color-text)]`}>
-            Image failed to load
-          </p>
+        <div className="w-full h-[158px] rounded-2xl flex justify-center items-center">
+          <p className={` text-[var(--color-text)]`}>Image failed to load</p>
         </div>
       ) : (
         <img
           src={image}
           alt="fund"
-          className="w-full h-[158px] object-cover rounded-[15px]"
+          className="w-full h-[158px] object-cover rounded-t-[15px]"
           onError={handleImageError}
         />
       )}

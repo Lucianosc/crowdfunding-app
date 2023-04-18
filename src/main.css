@@ -7,6 +7,12 @@
 
 @layer base {
 
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
   .light {
     --color-primary: #cb511f;
     /* bright red */
@@ -18,7 +24,7 @@
     /* white */
     --color-background2: #EAECEF;
 
-    --color-background3: #c6cbd2;
+    --color-background3: #c3bdca;
     /* light gray */
     --color-grey: #BDBDBD;
     /* medium gray */
@@ -56,29 +62,30 @@
   }
 
   h2 {
-    @apply  font-roboto
+    @apply font-roboto
   }
 
   h3 {
-    @apply  font-semibold text-[16px] leading-[26px] font-roboto
+    @apply font-semibold text-[16px] leading-[26px] font-roboto
   }
 
   h4 {
 
-    @apply text-[14px]  leading-[22px] font-roboto
+    @apply text-[14px] leading-[22px] font-roboto
   }
 
   p {
-    @apply  text-[12px] leading-[18px] font-roboto
+    @apply text-[12px] leading-[18px] font-roboto
   }
 
   input, textarea {
-    @apply  font-roboto
+    @apply font-roboto
   }
 
   button {
     @apply font-roboto
   }
+
 
 }
 
@@ -92,4 +99,9 @@
 input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
   filter: invert(0.8);
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

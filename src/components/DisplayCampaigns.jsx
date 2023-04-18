@@ -50,16 +50,16 @@ export default function DisplayCampaigns({
           isDarkTheme ? 'dark' : 'light'
         } text-[var(--color-text)]`}
       >
-        {title} ({campaigns.length})
+        {title} ({shownCampaigns.length})
       </h1>
       <div className="flex flex-wrap mt-[20px] gap-[26px]">
         {isLoading ? (
           <img
             src={loader}
             alt="loader"
-            className="w-[100px] h-[100px] object-contain"
+            className="w-[100px] h-[100px] object-contain mx-auto mt-[160px]"
           ></img>
-        ) : campaigns.length > 0 ? (
+        ) : shownCampaigns.length > 0 ? (
           shownCampaigns.map((campaign) => (
             <CampaignCard
               key={campaign.id}
@@ -68,7 +68,7 @@ export default function DisplayCampaigns({
             />
           ))
         ) : (
-          campaigns.length === 0 && (
+          shownCampaigns.length === 0 && (
             <p className=" font-semibold text-[14px] leading-[30px] text-[#818183]">
               We could not find any campaigns
             </p>
