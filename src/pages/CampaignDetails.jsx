@@ -30,11 +30,8 @@ export default function CampaignDetails() {
   const remainingDays = daysLeft(deadline);
   const [imageError, setImageError] = useState(false);
   const barPercentage = calculateBarPercentage(target, amountCollected);
-
-  const navigate = useNavigate();
   const { isDarkTheme } = useThemeContext();
-
-  const { contractAddress, contractABI, isWalletConnected, walletAddress } =
+  const { contractAddress, contractABI, isWalletConnected } =
     useStateContext();
 
   const {
@@ -79,20 +76,6 @@ export default function CampaignDetails() {
     else console.log("type any amount");
     // navigate("/");
   };
-
-  // const fundCampaign = async (id, amount) => {
-  //   try {
-  //     // to write a method for the contract we need to pass all the parameters of the method in order
-  //     const data = await donateToCampaign([
-  //       id,
-  //       // override ETH value
-  //       { value: ethers.utils.parseUnits(amount, "ether") },
-  //     ]);
-  //     console.log("contract call success", data);
-  //   } catch (e) {
-  //     console.log("contract call failure", e);
-  //   }
-  // };
 
   useEffect(() => {
     if (isLoadingDonators || isError) return;

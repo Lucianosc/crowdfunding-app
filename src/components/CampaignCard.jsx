@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { tagType, thirdweb } from '../assets'
+import { tagType, profile } from '../assets'
 import { daysLeft } from '../utils'
 import { useThemeContext } from '../context/ThemeContext'
 
@@ -107,9 +107,9 @@ export default function CampaignCard({
         <div className="flex items-center mt-[20px] gap-[12px]">
           <div className="flex justify-center items-center bg-[var(--color-background)] w-[30px] h-[30px] rounded-full ">
             <img
-              src={thirdweb}
+              src={profile}
               alt="user"
-              className="w-1/2 h-1/2 object-contain"
+              className="w-1/2 h-1/2 object-contain grayscale-[30%]"
             />
           </div>
           <p

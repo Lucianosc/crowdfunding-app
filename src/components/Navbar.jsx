@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { CustomButton } from "./";
-import { logo, menu, search, thirdweb, sun } from "../assets";
+import { logo, menu, search, profile, sun } from "../assets";
 import { navlinks } from "../constants";
 import { useStateContext } from "../context/StateContext";
 import { useThemeContext } from "../context/ThemeContext";
@@ -93,9 +93,9 @@ export default function Navbar({ handleCallback }) {
             } bg-[var(--color-background2)] cursor-pointer`}
           >
             <img
-              src={thirdweb}
+              src={profile}
               alt="user"
-              className="w-[60%] h-[60%] object-contain"
+              className="w-[60%] h-[60%] object-contain grayscale-[30%]"
             />
           </div>
         </Link>
