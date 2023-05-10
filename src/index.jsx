@@ -1,16 +1,28 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter as Router } from 'react-router-dom'
-import { ThirdwebProvider, ChainId } from '@thirdweb-dev/react'
-import App from './App'
-import './main.css'
-import { StateContextProvider } from './context/StateContext'
-import { ThemeContextProvider } from './context/ThemeContext'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter as Router } from "react-router-dom";
+import App from "./App";
+import "./main.css";
+import { StateContextProvider } from "./context/StateContext";
+import { ThemeContextProvider } from "./context/ThemeContext";
+import { WagmiConfig, createClient, configureChains, goerli } from "wagmi";
+import { publicProvider } from "wagmi/providers/public";
 
-const root = ReactDOM.createRoot(document.getElementById('root'))
+const { provider, webSocketProvider } = configureChains(
+  [goerli],
+  [publicProvider()]
+);
+
+const client = createClient({
+  autoConnect: true,
+  provider,
+  webSocketProvider,
+});
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <ThirdwebProvider activeChain={ChainId.Goerli}>
+  <WagmiConfig client={client}>
     <Router>
       <StateContextProvider>
         <ThemeContextProvider>
@@ -18,5 +30,5 @@ root.render(
         </ThemeContextProvider>
       </StateContextProvider>
     </Router>
-  </ThirdwebProvider>,
-)
+  </WagmiConfig>
+);

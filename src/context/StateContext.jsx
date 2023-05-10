@@ -1,118 +1,80 @@
-import React, { useContext, createContext } from 'react'
+import React, { useContext, createContext } from "react";
 import {
-  useAddress,
+  useAccount,
   useContract,
-  useMetamask,
-  useContractWrite,
-} from '@thirdweb-dev/react'
-import { ethers } from 'ethers'
+  useConnect,
+} from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
+import { ethers } from "ethers";
+import contractABI from "../constants/contractABI.json";
 
-const StateContext = createContext()
+const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
+  const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
+
   // hook used to get the contract instance at the specified address.
-  const { contract } = useContract(import.meta.env.VITE_CONTRACT_ADDRESS)
+  const contract = useContract({
+    address: contractAddress,
+    abi: contractABI,
+  });
 
   //hook used to create a write method for the contract method createCampaign
-  const { mutateAsync: createCampaign } = useContractWrite(
-    contract,
-    'createCampaign',
-  )
 
-  //hook used to create a write method for the contract method donateToCampaign
-  const { mutateAsync: donateToCampaign } = useContractWrite(
-    contract,
-    'donateToCampaign',
-  )
+  // const { config: createCampaignConfig } = usePrepareContractWrite({
+  //   address: contractAddress,
+  //   abi: contractABI,
+  //   functionName: "createCampaign",
+  // });
 
-  const address = useAddress() //  hook used to get the current user's Ethereum address.
-  const connect = useMetamask() // hook used to connect the user's browser wallet (Metamask) to the dApp.
+  // const {
+  //   // data,
+  //   // isLoading,
+  //   // isSuccess,
+  //   write: createCampaign,
+  // } = useContractWrite(createCampaignConfig);
 
-  const publishCampaign = async (form) => {
-    console.log(form)
-    try {
-      // to write a method for the contract we need to pass all the parameters of the method in order
-      const data = await createCampaign([
-        address, //owner's address
-        form.title,
-        form.description,
-        ethers.utils.parseUnits(form.target, 'ether'),
-        new Date(form.deadline).getTime(),
-        form.image,
-      ])
-      console.log('contract call success', data)
-    } catch (e) {
-      console.log('contract call failure', e)
-    }
-  }
+  const connector = new InjectedConnector({});
 
-  const fundCampaign = async (id, amount) => {
-    try {
-      // to write a method for the contract we need to pass all the parameters of the method in order
-      const data = await donateToCampaign([
-        id,
-        // override ETH value
-        { value: ethers.utils.parseUnits(amount, 'ether') },
-      ])
-      console.log('contract call success', data)
-    } catch (e) {
-      console.log('contract call failure', e)
-    }
-  }
+  const { isConnected: isWalletConnected, address: walletAddress } =
+    useAccount();
+  const { connect, connectors, error, isLoading, pendingConnector } =
+    useConnect();
 
-  const getCampaigns = async (filtered = false) => {
-    const campaigns = await contract.call('getCampaigns')
-    const parsedCampaigns = campaigns.map((campaign, i) => ({
-      owner: campaign.owner,
-      title: campaign.title,
-      description: campaign.description,
-      target: ethers.utils.formatEther(campaign.target.toString()),
-      deadline: campaign.deadline.toNumber(),
-      amountCollected: ethers.utils.formatEther(
-        campaign.amountCollected.toString(),
-      ),
-      image: campaign.image,
-      id: i,
-    }))
-    //filter by address
-    if (filtered) {
-      return parsedCampaigns.filter((campaign) => campaign.owner === address)
-    }
-    return parsedCampaigns
-  }
+  const connectWallet = () => connect({ connector });
 
-  const getDonations = async (id) => {
-    const donations = await contract.call('getDonators', id)
-    //returns an array of donators on [0] and another of the donations [1]
-    const numberOfDonations = donations[0].length
-
-    const parsedDonations = []
-
-    for (let i = 0; numberOfDonations > i; i++) {
-      parsedDonations.push({
-        donator: donations[0][i],
-        donation: ethers.utils.formatEther(donations[1][i]),
-      })
-    }
-
-    return parsedDonations
-  }
+  // const publishCampaign = async (form) => {
+  //   console.log(form);
+  //   try {
+  //     // to write a method for the contract we need to pass all the parameters of the method in order
+  //     const data = await createCampaign([
+  //       address, //owner's address
+  //       form.title,
+  //       form.description,
+  //       ethers.utils.parseUnits(form.target, "ether"),
+  //       new Date(form.deadline).getTime(),
+  //       form.image,
+  //     ]);
+  //     console.log("contract call success", data);
+  //   } catch (e) {
+  //     console.log("contract call failure", e);
+  //   }
+  // };
 
   return (
     <StateContext.Provider
       value={{
-        address,
+        contractAddress,
         contract,
-        connect,
-        getCampaigns,
-        createCampaign: publishCampaign,
-        fundCampaign,
-        getDonationsByCampaignId: getDonations,
+        contractABI,
+        walletAddress,
+        isWalletConnected,
+        connectWallet,
       }}
     >
       {children}
     </StateContext.Provider>
-  )
-}
+  );
+};
 
-export const useStateContext = () => useContext(StateContext)
+export const useStateContext = () => useContext(StateContext);
