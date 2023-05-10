@@ -55,7 +55,7 @@ export default function DisplayCampaigns({
     if (isLoadingCampaigns || isError) return;
     const campaigns = getCampaigns(isFilteredByOwner);
     setParsedCampaigns(campaigns);
-  }, []);
+  }, [isLoadingCampaigns]);
 
   useEffect(() => {
     setShownCampaigns(
