@@ -1,66 +1,123 @@
-import React, { useState, useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { ethers } from 'ethers'
-import { useStateContext } from '../context/StateContext'
-import { useThemeContext } from '../context/ThemeContext'
-import { CustomButton, CountBox, Loader } from '../components'
-import { calculateBarPercentage, daysLeft } from '../utils'
-import { thirdweb } from '../assets'
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useStateContext } from "../context/StateContext";
+import { useThemeContext } from "../context/ThemeContext";
+import { CustomButton, CountBox, Loader } from "../components";
+import { calculateBarPercentage, daysLeft } from "../utils";
+import { thirdweb } from "../assets";
+import {
+  useContractRead,
+  useContractWrite,
+  usePrepareContractWrite,
+} from "wagmi";
+import { ethers } from "ethers";
 
 export default function CampaignDetails() {
   const {
-    state: { id, target, amountCollected, image, title , owner, description, deadline},
-  } = useLocation()
-  const navigate = useNavigate()
-  const { isDarkTheme } = useThemeContext()
+    state: {
+      id,
+      target,
+      amountCollected,
+      image,
+      title,
+      owner,
+      description,
+      deadline,
+    },
+  } = useLocation();
+  const [amount, setAmount] = useState(0);
+  const [donators, setDonators] = useState([]);
+  const remainingDays = daysLeft(deadline);
+  const [imageError, setImageError] = useState(false);
+  const barPercentage = calculateBarPercentage(target, amountCollected);
+
+  const navigate = useNavigate();
+  const { isDarkTheme } = useThemeContext();
+
+  const { contractAddress, contractABI, isWalletConnected, walletAddress } =
+    useStateContext();
 
   const {
-    getDonationsByCampaignId,
-    contract,
-    address,
-    fundCampaign,
-  } = useStateContext()
-  const [isLoading, setIsLoading] = useState(false)
-  const [amount, setAmount] = useState(0)
-  const [donators, setDonators] = useState([])
-  const remainingDays = daysLeft(deadline)
-  const [imageError, setImageError] = useState(false)
-  const barPercentage = calculateBarPercentage(
-    target,
-    amountCollected,
-  )
+    data: donations,
+    isError,
+    isLoading: isLoadingDonators,
+  } = useContractRead({
+    address: contractAddress,
+    abi: contractABI,
+    functionName: "getDonators",
+    args: [id],
+  });
 
   const handleImageError = () => {
-    setImageError(true)
-  }
+    setImageError(true);
+  };
+  //hook used to create a write method for the contract method donateToCampaign
+  const { config: donateToCampaignConfig } = usePrepareContractWrite({
+    address: contractAddress,
+    abi: contractABI,
+    functionName: "donateToCampaign",
+    args: [id],
+    overrides: {
+      value: ethers.utils.parseEther(amount.toString()),
+    },
+  });
 
-  const fetchDonators = async () => {
-    const donators = await getDonationsByCampaignId(id)
-    setDonators(donators)
-  }
+  const {
+    data: donation,
+    isLoading: isLoadingDonation,
+    isSuccess,
+    write: donateToCampaign,
+  } = useContractWrite({
+    ...donateToCampaignConfig,
+    onSettled(data, error) {
+      console.log("Settled", { data, error });
+    },
+  });
 
-  const handleDonate = async () => {
-    setIsLoading(true)
-    if (amount > 0) await fundCampaign(id, amount)
-    else console.log('type any amount')
-    navigate('/')
-    setIsLoading(false)
-  }
+  const handleDonate = () => {
+    if (amount > 0) donateToCampaign();
+    else console.log("type any amount");
+    // navigate("/");
+  };
+
+  // const fundCampaign = async (id, amount) => {
+  //   try {
+  //     // to write a method for the contract we need to pass all the parameters of the method in order
+  //     const data = await donateToCampaign([
+  //       id,
+  //       // override ETH value
+  //       { value: ethers.utils.parseUnits(amount, "ether") },
+  //     ]);
+  //     console.log("contract call success", data);
+  //   } catch (e) {
+  //     console.log("contract call failure", e);
+  //   }
+  // };
 
   useEffect(() => {
-    if (contract) fetchDonators()
-  }, [contract])
+    if (isLoadingDonators || isError) return;
+
+    const numberOfDonations = donations[0].length;
+    const parsedDonations = [];
+    for (let i = 0; numberOfDonations > i; i++) {
+      parsedDonations.push({
+        donator: donations[0][i],
+        donation: ethers.utils.formatEther(donations[1][i]),
+      });
+    }
+    setDonators(parsedDonations);
+  }, []);
 
   return (
     <div>
-      {isLoading && <Loader />}
+      {isLoadingDonation && <Loader />}
       <div className="w-full flex md:flex-row flex-col mt-4 gap-[30px]">
         <div className="flex-1 flex-col">
           {imageError ? (
             <div className="w-full h-[410px] rounded-[15px] flex justify-center items-center">
               <p
                 className={`${
-                  isDarkTheme ? 'dark' : 'light'
+                  isDarkTheme ? "dark" : "light"
                 } text-[var(--color-text)]`}
               >
                 Image failed to load
@@ -79,14 +136,14 @@ export default function CampaignDetails() {
               className="w-[30px] bg-[var(--color-primary)] h-full rounded-full"
               style={{
                 width: `${barPercentage}%`,
-                maxWidth: '100%',
+                maxWidth: "100%",
               }}
             ></div>
           </div>
           <div className="mt-2">
             <p
               className={`font-normal text-[16px] leading-[18px] text-justify ${
-                isDarkTheme ? 'dark' : 'light'
+                isDarkTheme ? "dark" : "light"
               } text-[var(--color-text)]`}
             >
               {barPercentage}% backed
@@ -95,10 +152,7 @@ export default function CampaignDetails() {
         </div>
         <div className="flex md:w-[150px] w-full flex-wrap justify-between gap-[30px]">
           <CountBox title="Days left" value={remainingDays} />
-          <CountBox
-            title={`Raised of ${target}`}
-            value={amountCollected}
-          />
+          <CountBox title={`Raised of ${target}`} value={amountCollected} />
           <CountBox title="Total Backers" value={donators.length} />
         </div>
       </div>
@@ -107,7 +161,7 @@ export default function CampaignDetails() {
           <div>
             <h4
               className={`text-[32px] ${
-                isDarkTheme ? 'dark' : 'light'
+                isDarkTheme ? "dark" : "light"
               } text-[var(--color-text)] font-semibold `}
             >
               {title}
@@ -116,7 +170,7 @@ export default function CampaignDetails() {
           <div>
             <h4
               className={`text-[20px] ${
-                isDarkTheme ? 'dark' : 'light'
+                isDarkTheme ? "dark" : "light"
               } text-[var(--color-text)] font-semibold `}
             >
               Creator
@@ -124,7 +178,7 @@ export default function CampaignDetails() {
             <div className="mt-[20px] flex flex-row items-center flex-wrap gap-[14px]">
               <div
                 className={`w-[52px] h-[52px] flex items-center justify-center rounded-full ${
-                  isDarkTheme ? 'dark' : 'light'
+                  isDarkTheme ? "dark" : "light"
                 }} bg-[var(--color-background2)] cursor-pointer`}
               >
                 <img
@@ -136,7 +190,7 @@ export default function CampaignDetails() {
               <div>
                 <h4
                   className={`font-semibold text-[14px] ${
-                    isDarkTheme ? 'dark' : 'light'
+                    isDarkTheme ? "dark" : "light"
                   } text-[var(--color-text2)] break-all`}
                 >
                   {owner}
@@ -155,7 +209,7 @@ export default function CampaignDetails() {
           <div>
             <h4
               className={`text-[20px] ${
-                isDarkTheme ? 'dark' : 'light'
+                isDarkTheme ? "dark" : "light"
               } text-[var(--color-text)] font-semibold `}
             >
               Story
@@ -170,13 +224,13 @@ export default function CampaignDetails() {
           <div>
             <h4
               className={`text-[20px] ${
-                isDarkTheme ? 'dark' : 'light'
+                isDarkTheme ? "dark" : "light"
               } text-[var(--color-text)] font-semibold `}
             >
               Donators
             </h4>
             <div className="mt-[20px] flex flex-col gap-4">
-              {donators.length > 0 ? (
+              {donators?.length > 0 ? (
                 donators.map((item, index) => (
                   <div
                     key={`${item.donator}-${index}`}
@@ -184,14 +238,14 @@ export default function CampaignDetails() {
                   >
                     <p
                       className={`text-[16px] ${
-                        isDarkTheme ? 'dark' : 'light'
+                        isDarkTheme ? "dark" : "light"
                       } text-[var(--color-text2)] leading-[26px] break-all`}
                     >
                       {index + 1}. {item.donator}
                     </p>
                     <p
                       className={`text-[16px] min-w-[68px] ${
-                        isDarkTheme ? 'dark' : 'light'
+                        isDarkTheme ? "dark" : "light"
                       } text-[var(--color-text2)] leading-[26px] break-all`}
                     >
                       {item.donation} ETH
@@ -201,7 +255,7 @@ export default function CampaignDetails() {
               ) : (
                 <p
                   className={` font-normal text-[16px] leading-[26px] text-justify ${
-                    isDarkTheme ? 'dark' : 'light'
+                    isDarkTheme ? "dark" : "light"
                   } text-[var(--color-text2)]`}
                 >
                   No donators yet. Be the first one!
@@ -214,7 +268,7 @@ export default function CampaignDetails() {
             <div className="mt-[20px] flex flex-col p-4 bg-[var(--color-background2)] rounded-[10px] max-w-[720px] mx-auto">
               <p
                 className={`font-medium text-[20px] leading-[30px] text-center ${
-                  isDarkTheme ? 'dark' : 'light'
+                  isDarkTheme ? "dark" : "light"
                 } text-[var(--color-text)]`}
               >
                 Fund the campaign
@@ -223,14 +277,14 @@ export default function CampaignDetails() {
                 <div className=" p-4 bg-[var(--color-background)] rounded-[10px]">
                   <h4
                     className={`font-semibold ${
-                      isDarkTheme ? 'dark' : 'light'
+                      isDarkTheme ? "dark" : "light"
                     } text-[var(--color-text)] text-[14px] leading-[22px]`}
                   >
                     Back it because you belive in it.
                   </h4>
                   <p
                     className={`mt-[20px] leading-[22px] ${
-                      isDarkTheme ? 'dark' : 'light'
+                      isDarkTheme ? "dark" : "light"
                     } text-[var(--color-text2)]`}
                   >
                     Support the proyect for no reward, just because it speaks to
@@ -252,11 +306,13 @@ export default function CampaignDetails() {
                   <CustomButton
                     btnType="button"
                     title={
-                      address ? 'Fund Campaign' : 'Please connect your wallet'
+                      isWalletConnected
+                        ? "Fund Campaign"
+                        : "Please connect your wallet"
                     }
                     styles="w-full bg-[var(--color-primary)] text-[var(--color-secondary)] max-w-[240px] "
                     handleClick={() => handleDonate()}
-                    disabled={address ? false : true}
+                    disabled={isWalletConnected ? false : true}
                   />
                 </div>
               </div>
@@ -265,5 +321,5 @@ export default function CampaignDetails() {
         </div>
       </div>
     </div>
-  )
+  );
 }
