@@ -10,7 +10,7 @@ export default function Sidebar() {
   const { isDarkTheme, toggleTheme } = useThemeContext()
 
   return (
-    <div className="flex flex-col justify-between items-center sticky top-5 h-[93vh]">
+    <nav className="flex flex-col justify-between items-center sticky top-5 h-[93vh]">
       <NavItem
         styles={`w-[52px] h-[52px] ${
           isDarkTheme ? 'dark' : 'light'
@@ -50,6 +50,6 @@ export default function Sidebar() {
           handleClick={() => toggleTheme()}
         />
       </div>
-    </div>
+    </nav>
   )
 }

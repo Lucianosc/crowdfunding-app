@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useStateContext } from "../context/StateContext";
 import { useThemeContext } from "../context/ThemeContext";
 import { CustomButton, CountBox, Loader } from "../components";
@@ -74,7 +74,6 @@ export default function CampaignDetails() {
   const handleDonate = () => {
     if (amount > 0) donateToCampaign();
     else console.log("type any amount");
-    // navigate("/");
   };
 
   useEffect(() => {

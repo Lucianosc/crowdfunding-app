@@ -13,8 +13,6 @@ import {
 import { ethers } from "ethers";
 
 export default function CreateCampaign() {
-  // const navigate = useNavigate();
-  // const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
     name: "",
     title: "",
@@ -74,7 +72,6 @@ export default function CreateCampaign() {
         // setIsLoading(true);
         writeCampaign();
         // setIsLoading(false);
-        // navigate("/");
       } else {
         alert("provide valid image URL");
         setForm({ ...form, image: "" });

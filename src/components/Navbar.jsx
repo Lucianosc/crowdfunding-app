@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { CustomButton } from "./";
 import { logo, menu, search, profile, sun } from "../assets";
 import { navlinks } from "../constants";
@@ -76,7 +76,7 @@ export default function Navbar({ handleCallback }) {
         </div>
       </div>
       {/* desktop nav */}
-      <div className="sm:flex flex-row hidden justify-end gap-4 ">
+      <nav className="sm:flex flex-row hidden justify-end gap-4 ">
         <CustomButton
           btnType="button"
           title={isWalletConnected ? "Create campaign" : "Connect wallet"}
@@ -86,7 +86,7 @@ export default function Navbar({ handleCallback }) {
             else connectWallet();
           }}
         />
-        <Link to="/profile">
+        <NavLink to="/profile">
           <div
             className={`flex justify-center items-center w-[52px] h-[52px] rounded-[100px] ${
               isDarkTheme ? "dark" : "light"
@@ -98,10 +98,10 @@ export default function Navbar({ handleCallback }) {
               className="w-[60%] h-[60%] object-contain grayscale-[30%]"
             />
           </div>
-        </Link>
-      </div>
+        </NavLink>
+      </nav>
       {/* mobile nav */}
-      <div className="flex justify-between items-center relative sm:hidden">
+      <nav className="flex justify-between items-center relative sm:hidden">
         <div
           className={`flex justify-center items-center w-[40px] h-[40px] rounded-[10px] ${
             isDarkTheme ? "dark" : "light"
@@ -189,7 +189,7 @@ export default function Navbar({ handleCallback }) {
             toggleDrawer ? "z-5" : "z-[-1]"
           } transition-all duration-200`}
         ></div>
-      </div>
+      </nav>
     </div>
   );
 }
