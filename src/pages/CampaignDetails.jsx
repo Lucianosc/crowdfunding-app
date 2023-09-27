@@ -31,8 +31,7 @@ export default function CampaignDetails() {
   const [imageError, setImageError] = useState(false);
   const barPercentage = calculateBarPercentage(target, amountCollected);
   const { isDarkTheme } = useThemeContext();
-  const { contractAddress, contractABI, isWalletConnected } =
-    useStateContext();
+  const { contractAddress, contractABI, isWalletConnected } = useStateContext();
 
   const {
     data: donations,
@@ -68,6 +67,9 @@ export default function CampaignDetails() {
     ...donateToCampaignConfig,
     onSettled(data, error) {
       console.log("Settled", { data, error });
+    },
+    onError(data, error) {
+      console.log(data, error);
     },
   });
 
